@@ -1,0 +1,20 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    uuid(88BDA8C7-3591-4A11-B743-CCE55B316862),
+    version(1.0),
+]
+library GoogleHelperLib
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(2288AEBD-1891-4AF7-A9A1-50570241D789)        
+    ]
+    coclass GoogleHelper
+    {
+        [default] interface IDispatch;
+    };
+};
+
+import "shobjidl.idl";

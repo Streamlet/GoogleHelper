@@ -1,0 +1,30 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+    uuid(8EAC8FC6-46EF-4C0A-8416-EEAC2B48C06B),
+    dual,
+]
+interface IGoogleHelperAgent : IDispatch
+{
+    [id(1)] HRESULT Report([in] BSTR bstrUrl);
+};
+
+[
+    uuid(5CA70C24-2A74-465B-A2C1-144E1F1E9B96),
+    version(1.0),
+]
+library GoogleHelperAgentLib
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(2F3DF268-BFF9-421C-A045-1F931DE2F835)        
+    ]
+    coclass GoogleHelperAgent
+    {
+        [default] interface IDispatch;
+    };
+};
+
+import "shobjidl.idl";
