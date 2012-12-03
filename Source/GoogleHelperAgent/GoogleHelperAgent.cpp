@@ -15,6 +15,7 @@
 
 
 #include "GoogleHelperAgent.h"
+#include "MessageWindow.h"
 
 GoogleHelperAgent::GoogleHelperAgent()
 {
@@ -28,6 +29,15 @@ GoogleHelperAgent::~GoogleHelperAgent()
 
 STDMETHODIMP GoogleHelperAgent::Report(BSTR bstrUrl)
 {
-    MessageBox(0, bstrUrl, 0, 0);
+    if (!g_wndMessage.IsWindow())
+    {
+        g_wndMessage.Create();
+    }
+
+    if (g_wndMessage.IsWindow())
+    {
+        g_wndMessage.ReportUrl(bstrUrl);
+    }
+
     return S_OK;
 }

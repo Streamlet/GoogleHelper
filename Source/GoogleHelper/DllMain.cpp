@@ -57,6 +57,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
+        CoInitialize(nullptr);
         xl::g_pComModule = new xl::ComModule(hModule, _T("Streamlet GoogleHelper TypeLib 1.0"));
         break;
     case DLL_THREAD_ATTACH:
@@ -65,6 +66,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         break;
     case DLL_PROCESS_DETACH:
         delete xl::g_pComModule;
+        CoUninitialize();
         break;
     default:
         break;

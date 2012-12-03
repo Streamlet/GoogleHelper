@@ -17,13 +17,14 @@
 #include <Windows.h>
 #include <tchar.h>
 #include <xl/Win32/COM/xlComInclude.h>
+#include "MessageWindow.h"
 
 int APIENTRY _tWinMain(_In_ HINSTANCE     hInstance,
                        _In_opt_ HINSTANCE hPrevInstance,
                        _In_ LPTSTR        lpCmdLine,
                        _In_ int           nCmdShow)
 {
-    xl::g_pComModule = new xl::ComModule(hInstance, _T("Streamlet COMProvider TypeLib 1.0"));
+    xl::g_pComModule = new xl::ComModule(hInstance, _T("Streamlet GoogleHelperAgent TypeLib 1.0"));
     
     if (_tcsicmp(lpCmdLine, _T("/RegServer")) == 0 || _tcsicmp(lpCmdLine, _T("-RegServer")) == 0)
     {
@@ -45,6 +46,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE     hInstance,
             {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
+            }
+
+            if (g_wndMessage.IsWindow())
+            {
+                g_wndMessage.SendMessage(WM_CLOSE, 0, 0);
             }
         }
 

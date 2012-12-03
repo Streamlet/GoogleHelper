@@ -25,19 +25,30 @@ GoogleHelper::GoogleHelper() :
     m_pWebBrowser(nullptr),
     m_pCPC(nullptr),
     m_pCP(nullptr),
-    m_dwCookie(0)
+    m_dwCookie(0),
+    m_pAgent(nullptr)
 {
-
+    CoCreateInstance(__uuidof(GoogleHelperAgent),
+                     nullptr,
+                     CLSCTX_LOCAL_SERVER,
+                     __uuidof(IGoogleHelperAgent),
+                     (LPVOID *)&m_pAgent);
 }
 
 GoogleHelper::~GoogleHelper()
 {
-    ReleaseResources();
+    ReleaseSiteResources();
+
+    if (m_pAgent != nullptr)
+    {
+        m_pAgent->Release();
+        m_pAgent = nullptr;
+    }
 }
 
 STDMETHODIMP GoogleHelper::SetSite(IUnknown *pUnkSite)
 {
-    ReleaseResources();
+    ReleaseSiteResources();
 
     if (pUnkSite != nullptr)
     {
@@ -119,7 +130,7 @@ STDMETHODIMP GoogleHelper::Invoke(DISPID dispIdMember,
                                                              puArgErr);
 }
 
-void GoogleHelper::ReleaseResources()
+void GoogleHelper::ReleaseSiteResources()
 {
     if (m_dwCookie != 0 && m_pCP != nullptr)
     {
@@ -229,15 +240,14 @@ HRESULT GoogleHelper::OnBeforeNavigate2(DISPPARAMS *pDispParams, VARIANT *pVarRe
 
     xl::String strJumpingUrlDecoded = UrlUtils::UrlDecode(strJumpingUrl);
 
-    xl::String strDebugString;
-    strDebugString += _T("GoogleHelper Redirect: ");
-    strDebugString += strJumpingUrlDecoded;
-    strDebugString += _T("\r\n");
-    OutputDebugString(strDebugString.GetAddress());
-
     VARIANT vtUrl = {};
     vtUrl.vt = VT_BSTR;
     vtUrl.bstrVal = SysAllocString(strJumpingUrlDecoded.GetAddress());
+
+    if (m_pAgent != nullptr)
+    {
+        m_pAgent->Report(vtUrl.bstrVal);
+    }
 
     *Cancel.pboolVal = VARIANT_TRUE;
 

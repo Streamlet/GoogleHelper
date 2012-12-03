@@ -18,6 +18,7 @@
 
 
 #include "GoogleHelper_h.h"
+#include "../GoogleHelperAgent/GoogleHelperAgent_h.h"
 #include <xl/Win32/COM/xlComInclude.h>
 #include <xl/Win32/COM/InterfaceHelper/xlIObjectWithSiteImpl.h>
 #include <xl/Win32/COM/InterfaceHelper/xlDWebBrowserEvents2Impl.h>
@@ -51,7 +52,7 @@ public:
     XL_COM_INTERFACE_END()
 
 protected:
-    void ReleaseResources();
+    void ReleaseSiteResources();
     HRESULT OnBeforeNavigate2(DISPPARAMS *pDispParams, VARIANT *pVarResult);
 
 private:
@@ -60,6 +61,9 @@ private:
     IConnectionPointContainer *m_pCPC;
     IConnectionPoint          *m_pCP;
     DWORD                      m_dwCookie;
+
+private:
+    IGoogleHelperAgent        *m_pAgent;
 };
 
 XL_DECLARE_COM_CLASS(GoogleHelper,

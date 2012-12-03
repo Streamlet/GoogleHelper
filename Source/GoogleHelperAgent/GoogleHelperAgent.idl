@@ -23,7 +23,7 @@ library GoogleHelperAgentLib
     ]
     coclass GoogleHelperAgent
     {
-        [default] interface IDispatch;
+        [default] interface IGoogleHelperAgent;
     };
 };
 
