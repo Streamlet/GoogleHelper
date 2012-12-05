@@ -18,6 +18,8 @@
 
 
 #include <xl/Win32/GUI/xlWindow.h>
+#include <xl/Win32/GUI/xlMenu.h>
+#include <xl/Win32/Threads/xlThread.h>
 
 class MessageWindow : public xl::Window
 {
@@ -34,7 +36,20 @@ private:
     LRESULT OnTrayIcon(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled);
 
 private:
+    LRESULT OnMenuShowTip(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
+    LRESULT OnMenuUpdate (HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
+    LRESULT OnMenuWebsite(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
+
+private:
     NOTIFYICONDATA m_nid;
+    xl::Menu m_menuTray;
+
+private:
+    typedef xl::Thread<DWORD> UpdateThreadType;
+    UpdateThreadType m_tUpdateThread;
+
+private:
+    DWORD UpdateThread(HANDLE hQuit, DWORD dwDelay);
 };
 
 __declspec(selectany) MessageWindow g_wndMessage;

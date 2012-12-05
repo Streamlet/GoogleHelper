@@ -18,6 +18,7 @@
 
 
 #include "GoogleHelperAgent_h.h"
+#include "../GlobalDef.h"
 #include <xl/Win32/COM/xlComInclude.h>
 
 class GoogleHelperAgent : public xl::ComClass<GoogleHelperAgent>,
@@ -38,7 +39,7 @@ public:
 };
 
 XL_DECLARE_COM_CLASS(GoogleHelperAgent,
-                     _T("Google 搜索助手通知模块"),
+                     MODULE_NAME_GOOGLEHELPER_AGENT,
                      _T("Streamlet.GoogleHelperAgent.Class"),
                      _T("1"));
 

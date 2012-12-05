@@ -18,6 +18,7 @@
 
 
 #include "GoogleHelper_h.h"
+#include "../GlobalDef.h"
 #include "../GoogleHelperAgent/GoogleHelperAgent_h.h"
 #include <xl/Win32/COM/xlComInclude.h>
 #include <xl/Win32/COM/InterfaceHelper/xlIObjectWithSiteImpl.h>
@@ -67,7 +68,7 @@ private:
 };
 
 XL_DECLARE_COM_CLASS(GoogleHelper,
-                     _T("Google ËÑË÷ÖúÊÖ IE ²å¼þ"),
+                     MODULE_NAME_GOOGLEHELPER,
                      _T("Streamlet.GoogleHelper.Class"),
                      _T("1"));
 
