@@ -16,6 +16,7 @@
 
 #include "../GlobalDef.h"
 #include "MessageWindow.h"
+#include "AboutDialog.h"
 #include "resource.h"
 #include <xl/String/xlString.h>
 #include <xl/String/xlEncoding.h>
@@ -33,6 +34,7 @@ enum
 {
     ID_MENU_SHOWTIP,
     ID_MENU_UPDATE,
+    ID_MENU_ABOUT,
     ID_MENU_WEBSITE,
     ID_MENU_MAX
 };
@@ -41,6 +43,7 @@ LPCTSTR MENU_TEXT[] =
 {
     _T("跳转时显示消息通知"),
     _T("检查新版本"),
+    _T("关于 ") PRODUCT_NAME,
     _T("访问溪流软件工作室网站")
 };
 
@@ -60,6 +63,7 @@ MessageWindow::MessageWindow()
 
     AppendMenuCommandMsgHandler(ID_MENU_SHOWTIP, CommandMsgHandler(this, &MessageWindow::OnMenuShowTip));
     AppendMenuCommandMsgHandler(ID_MENU_UPDATE,  CommandMsgHandler(this, &MessageWindow::OnMenuUpdate));
+    AppendMenuCommandMsgHandler(ID_MENU_ABOUT,   CommandMsgHandler(this, &MessageWindow::OnMenuAbout));
     AppendMenuCommandMsgHandler(ID_MENU_WEBSITE, CommandMsgHandler(this, &MessageWindow::OnMenuWebsite));
 }
 
@@ -92,6 +96,7 @@ LRESULT MessageWindow::OnCreate(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
     m_menuTray.AppendMenu(MF_SEPARATOR, 0, nullptr);
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_UPDATE, MENU_TEXT[ID_MENU_UPDATE]);
     m_menuTray.AppendMenu(MF_SEPARATOR, 0, nullptr);
+    m_menuTray.AppendMenu(MF_STRING, ID_MENU_ABOUT, MENU_TEXT[ID_MENU_ABOUT]);
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_WEBSITE, MENU_TEXT[ID_MENU_WEBSITE]);
     m_menuTray.SetMenuDefaultItem(4, TRUE);
 
@@ -135,6 +140,12 @@ LRESULT MessageWindow::OnMenuShowTip(HWND hWnd, WORD wID, WORD wCode, HWND hCont
 LRESULT MessageWindow::OnMenuUpdate(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled)
 {
     m_tUpdateThread.Create(UpdateThreadType::ProcType(this, &MessageWindow::UpdateThread), 0);
+    return 0;
+}
+
+LRESULT MessageWindow::OnMenuAbout(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled)
+{
+    AboutDialog::ShowDialog(this);
     return 0;
 }
 

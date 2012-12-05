@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="GoogleHelperAgent.cpp" />
     <ClCompile Include="MessageWindow.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -151,6 +152,7 @@
     <Midl Include="GoogleHelperAgent.idl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AboutDialog.h" />
     <ClInclude Include="GoogleHelperAgent.h" />
     <ClInclude Include="MessageWindow.h" />
     <ClInclude Include="resource.h" />

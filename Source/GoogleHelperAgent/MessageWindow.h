@@ -38,6 +38,7 @@ private:
 private:
     LRESULT OnMenuShowTip(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
     LRESULT OnMenuUpdate (HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
+    LRESULT OnMenuAbout  (HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
     LRESULT OnMenuWebsite(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled);
 
 private:
