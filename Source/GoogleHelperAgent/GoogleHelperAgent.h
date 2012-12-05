@@ -38,7 +38,7 @@ public:
 };
 
 XL_DECLARE_COM_CLASS(GoogleHelperAgent,
-                     _T("Streamlet GoogleHelperAgent Class"),
+                     _T("Google 搜索助手通知模块"),
                      _T("Streamlet.GoogleHelperAgent.Class"),
                      _T("1"));
 

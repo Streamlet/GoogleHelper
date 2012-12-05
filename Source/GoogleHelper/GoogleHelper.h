@@ -67,7 +67,7 @@ private:
 };
 
 XL_DECLARE_COM_CLASS(GoogleHelper,
-                     _T("Streamlet GoogleHelper Class"),
+                     _T("Google ËÑË÷ÖúÊÖ IE ²å¼þ"),
                      _T("Streamlet.GoogleHelper.Class"),
                      _T("1"));
 
