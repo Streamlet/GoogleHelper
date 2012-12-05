@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoogleHelper", "GoogleHelper\GoogleHelper.vcxproj", "{320C7903-3B68-4610-8F5A-DC214953C06E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0A86E5A2-121B-4D57-B51E-7C578B048333} = {0A86E5A2-121B-4D57-B51E-7C578B048333}
