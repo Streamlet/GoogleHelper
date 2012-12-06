@@ -32,7 +32,6 @@ enum
 
 enum
 {
-    ID_MENU_SHOWTIP,
     ID_MENU_UPDATE,
     ID_MENU_ABOUT,
     ID_MENU_WEBSITE,
@@ -41,7 +40,6 @@ enum
 
 LPCTSTR MENU_TEXT[] =
 {
-    _T("跳转时显示消息通知"),
     _T("检查新版本"),
     _T("关于 ") PRODUCT_NAME,
     _T("访问溪流软件工作室网站")
@@ -61,7 +59,6 @@ MessageWindow::MessageWindow()
     AppendMsgHandler(WM_DESTROY,        MsgHandler(this, &MessageWindow::OnDestroy));
     AppendMsgHandler(MYWM_NOTIFYICON,   MsgHandler(this, &MessageWindow::OnTrayIcon));
 
-    AppendMenuCommandMsgHandler(ID_MENU_SHOWTIP, CommandMsgHandler(this, &MessageWindow::OnMenuShowTip));
     AppendMenuCommandMsgHandler(ID_MENU_UPDATE,  CommandMsgHandler(this, &MessageWindow::OnMenuUpdate));
     AppendMenuCommandMsgHandler(ID_MENU_ABOUT,   CommandMsgHandler(this, &MessageWindow::OnMenuAbout));
     AppendMenuCommandMsgHandler(ID_MENU_WEBSITE, CommandMsgHandler(this, &MessageWindow::OnMenuWebsite));
@@ -92,13 +89,10 @@ LRESULT MessageWindow::OnCreate(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
     Shell_NotifyIcon(NIM_ADD, &m_nid);
 
     m_menuTray.CreatePopup();
-    m_menuTray.AppendMenu(MF_STRING, ID_MENU_SHOWTIP, MENU_TEXT[ID_MENU_SHOWTIP]);
-    m_menuTray.AppendMenu(MF_SEPARATOR, 0, nullptr);
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_UPDATE, MENU_TEXT[ID_MENU_UPDATE]);
     m_menuTray.AppendMenu(MF_SEPARATOR, 0, nullptr);
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_ABOUT, MENU_TEXT[ID_MENU_ABOUT]);
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_WEBSITE, MENU_TEXT[ID_MENU_WEBSITE]);
-    m_menuTray.SetMenuDefaultItem(4, TRUE);
 
     return 0;
 }
@@ -129,11 +123,6 @@ LRESULT MessageWindow::OnTrayIcon(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
         break;
     }
 
-    return 0;
-}
-
-LRESULT MessageWindow::OnMenuShowTip(HWND hWnd, WORD wID, WORD wCode, HWND hControl, BOOL &bHandled)
-{
     return 0;
 }
 
@@ -205,7 +194,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
 
     XL_INFO(_T("Local version: %s"), szLocalVersion);
 
-    xl::String strUrl = _T("http://www.streamlet.org/api/xlWarKey/NewVersion/");
+    xl::String strUrl = _T("http://www.streamlet.org/api/Update/Query/GoogleHelper/");
     strUrl += szLocalVersion;
 
     HttpRestIO http(_T("GoogleHelper"));
@@ -240,9 +229,9 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
     //
     // {
     //     "Result": true,
-    //     "Version": "3.0.1.0",
-    //     "DisplayVersion": "3.0 正式版",
-    //     "Url": "http://www.streamlet.org/Software/xlWarKey/"
+    //     "Version": "1.0.0.0",
+    //     "DisplayVersion": "1.0 正式版",
+    //     "Url": "http://www.streamlet.org/Software/GoogleHelper/"
     // }
     //
 
