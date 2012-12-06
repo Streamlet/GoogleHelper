@@ -25,8 +25,8 @@ Echo 正在编译...
 "%~dp0%ToolsDir%\RCVersion.exe" /FileVersion:%Version:.=,% /ProductVersion:%PVersion:.=,%,0,0 /String:FileVersion=%Version% /String:ProductVersion=%PVersion% "%~dp0%SourceDir%\%AppName%\*.rc"
 
 Set BuildCmd=%VS110COMNTOOLS%..\IDE\devenv.com
-"%BuildCmd%" "%~dp0%SourceDir%\%AppName%.sln" /Rebuild "Release|Win32"
-"%BuildCmd%" "%~dp0%SourceDir%\%AppName%.sln" /Rebuild "Release|x64"
+"%BuildCmd%" "%~dp0%SourceDir%\%AppName%.sln" /Build "Release|Win32"
+"%BuildCmd%" "%~dp0%SourceDir%\%AppName%.sln" /Build "Release|x64"
 
 Echo 正在组织文件...
 
@@ -35,6 +35,10 @@ Md "%~dp0%ReleaseDir%"
 Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelper.dll"      "%~dp0%ReleaseDir%\"
 Copy "%~dp0%SourceDir%\bin\x64\Release\GoogleHelper.dll"        "%~dp0%ReleaseDir%\GoogleHelper64.dll"
 Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelperAgent.exe" "%~dp0%ReleaseDir%\"
+
+Echo 正在编译安装程序...
+
+"%PROGRAMFILES(x86)%\NSIS\Unicode\makensis.exe" /DVERSION=%Version% /DSOURCEDIR=%ReleaseDir% "%~dp0Installer.nsi"
 
 Echo 生成结束
 
