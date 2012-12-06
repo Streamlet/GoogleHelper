@@ -94,6 +94,8 @@ LRESULT MessageWindow::OnCreate(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_ABOUT, MENU_TEXT[ID_MENU_ABOUT]);
     m_menuTray.AppendMenu(MF_STRING, ID_MENU_WEBSITE, MENU_TEXT[ID_MENU_WEBSITE]);
 
+    m_tUpdateThread.Create(UpdateThreadType::ProcType(this, &MessageWindow::UpdateThread), 30000);
+
     return 0;
 }
 
