@@ -103,7 +103,7 @@ void AboutDialog::SetTexts()
 
 bool AboutDialog::OnCreate()
 {
-    HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_TRAY));
+    HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_APP));
     SetIcon(hIcon);
 
     CreateControls();
