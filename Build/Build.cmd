@@ -31,14 +31,21 @@ Set BuildCmd=%VS110COMNTOOLS%..\IDE\devenv.com
 Echo 正在组织文件...
 
 Md "%~dp0%ReleaseDir%"
+Md "%~dp0%ReleaseDir%\Binaries"
+Md "%~dp0%ReleaseDir%\Symbols"
+Md "%~dp0%ReleaseDir%\Installer"
 
-Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelper.dll"      "%~dp0%ReleaseDir%\"
-Copy "%~dp0%SourceDir%\bin\x64\Release\GoogleHelper.dll"        "%~dp0%ReleaseDir%\GoogleHelper64.dll"
-Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelperAgent.exe" "%~dp0%ReleaseDir%\"
+Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelper.dll"      "%~dp0%ReleaseDir%\Binaries\"
+Copy "%~dp0%SourceDir%\bin\x64\Release\GoogleHelper.dll"        "%~dp0%ReleaseDir%\Binaries\GoogleHelper64.dll"
+Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelperAgent.exe" "%~dp0%ReleaseDir%\Binaries\"
+
+Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelper.pdb"      "%~dp0%ReleaseDir%\Symbols\"
+Copy "%~dp0%SourceDir%\bin\x64\Release\GoogleHelper.pdb"        "%~dp0%ReleaseDir%\Symbols\GoogleHelper64.pdb"
+Copy "%~dp0%SourceDir%\bin\Win32\Release\GoogleHelperAgent.pdb" "%~dp0%ReleaseDir%\Symbols\"
 
 Echo 正在编译安装程序...
 
-"%PROGRAMFILES(x86)%\NSIS\Unicode\makensis.exe" /DVERSION=%Version% /DSOURCEDIR=%ReleaseDir% "%~dp0Installer.nsi"
+"%PROGRAMFILES(x86)%\NSIS\Unicode\makensis.exe" /DVERSION=%Version% /DSOURCEDIR=%ReleaseDir%\Binaries /DOUTFILE=%ReleaseDir%\Installer\%AppName%%PVersion:.=%.exe "%~dp0Installer.nsi"
 
 Echo 生成结束
 
