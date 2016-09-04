@@ -19,10 +19,11 @@
 
 #include "GoogleHelperAgent_h.h"
 #include "../GlobalDef.h"
-#include <xl/Win32/COM/xlComInclude.h>
+#include <xl/Windows/COM/xlComInclude.h>
+#include <tchar.h>
 
-class GoogleHelperAgent : public xl::ComClass<GoogleHelperAgent>,
-                          public xl::Dispatcher<IGoogleHelperAgent>
+class GoogleHelperAgent : public xl::Windows::ComClass<GoogleHelperAgent>,
+                          public xl::Windows::Dispatcher<IGoogleHelperAgent>
 {
 public:
     GoogleHelperAgent();

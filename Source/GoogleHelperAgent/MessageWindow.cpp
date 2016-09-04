@@ -18,11 +18,12 @@
 #include "MessageWindow.h"
 #include "AboutDialog.h"
 #include "resource.h"
-#include <xl/String/xlString.h>
-#include <xl/String/xlEncoding.h>
+#include <xl/Common/String/xlString.h>
+#include <xl/Common/String/xlEncoding.h>
 #include "../Utility/TraceLog.h"
 #include "../Utility/HttpRestIO.h"
 #include <boost/property_tree/json_parser.hpp>
+#include <tchar.h>
 #pragma comment(lib, "Version.lib")
 
 enum
@@ -202,7 +203,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
     HttpRestIO http(_T("GoogleHelper"));
     xl::Array<BYTE> arrResponse;
 
-    if (!http.SendRequest(_T("GET"), strUrl.GetAddress(), nullptr, nullptr, 0, hQuit, &arrResponse))
+    if (!http.SendRequest(_T("GET"), strUrl, nullptr, nullptr, 0, hQuit, &arrResponse))
     {
         return 0;
     }
@@ -224,7 +225,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
         return 0;
     }
 
-    XL_INFO(_T("Update result:\r\n%s"), strJson.GetAddress());
+    XL_INFO(_T("Update result:\r\n%s"), (LPCTSTR)strJson);
 
     //
     // Json Format
@@ -241,7 +242,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
     {
         using namespace boost::property_tree;
 
-        std::wstringstream ss(strJson.GetAddress());
+        std::wstringstream ss((LPCTSTR)strJson);
         wptree pt;
         json_parser::read_json(ss, pt);
 
@@ -266,7 +267,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
 
         TCHAR szMessage[MAX_PATH] = {};
         xl::String strVersionString = strDisplayVersion + _T(" (") + strVersion + _T(") ");
-        _stprintf_s(szMessage, MESSAGE_UPDATE_NEW_VERSION, strVersionString.GetAddress());
+        _stprintf_s(szMessage, MESSAGE_UPDATE_NEW_VERSION, (LPCTSTR)strVersionString);
 
         if (MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_YESNO | MB_ICONINFORMATION) != IDYES)
         {
@@ -274,7 +275,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
             return 0;
         }
 
-        ShellExecute(m_hWnd, _T("open"), strUrl.GetAddress(), NULL, NULL, SW_SHOW);
+        ShellExecute(m_hWnd, _T("open"), strUrl, NULL, NULL, SW_SHOW);
         XL_INFO(_T("User accept to update."));
     }
     catch (...)

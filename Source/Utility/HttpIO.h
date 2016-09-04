@@ -17,9 +17,9 @@
 #define __HTTPIO_H_2059AD7B_5F50_4E99_AB5A_AEA1956C9EC6_INCLUDED__
 
 
-#include <xl/Containers/xlArray.h>
-#include <xl/String/xlString.h>
-#include <xl/Meta/xlFunction.h>
+#include <xl/Common/Containers/xlArray.h>
+#include <xl/Common/String/xlString.h>
+#include <xl/Common/Meta/xlFunction.h>
 #include <Windows.h>
 #include <WinHttp.h>
 

@@ -17,7 +17,7 @@
 #define __ENCODING_H_818FBE13_C7B5_4AB2_9B4B_7988CEBBE6A6_INCLUDED__
 
 #include <Windows.h>
-#include <xl/String/xlString.h>
+#include <xl/Common/String/xlString.h>
 
 class Encoding
 {

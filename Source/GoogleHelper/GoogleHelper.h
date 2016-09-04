@@ -20,13 +20,14 @@
 #include "GoogleHelper_h.h"
 #include "../GlobalDef.h"
 #include "../GoogleHelperAgent/GoogleHelperAgent_h.h"
-#include <xl/Win32/COM/xlComInclude.h>
-#include <xl/Win32/COM/InterfaceHelper/xlIObjectWithSiteImpl.h>
-#include <xl/Win32/COM/InterfaceHelper/xlDWebBrowserEvents2Impl.h>
+#include <xl/Windows/COM/xlComInclude.h>
+#include <xl/Windows/COM/InterfaceHelper/xlIObjectWithSiteImpl.h>
+#include <xl/Windows/COM/InterfaceHelper/xlDWebBrowserEvents2Impl.h>
+#include <tchar.h>
 
-class GoogleHelper : public xl::ComClass<GoogleHelper>,
-                     public xl::Dispatcher<xl::IObjectWithSiteImpl<>>,
-                     public xl::DWebBrowserEvents2Impl<>
+class GoogleHelper : public xl::Windows::ComClass<GoogleHelper>,
+                     public xl::Windows::Dispatcher<xl::Windows::IObjectWithSiteImpl<>>,
+                     public xl::Windows::DWebBrowserEvents2Impl<>
 {
 public:
     GoogleHelper();

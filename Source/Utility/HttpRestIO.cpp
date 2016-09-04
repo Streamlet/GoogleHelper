@@ -16,7 +16,7 @@
 
 #include "HttpRestIO.h"
 #include "HttpIO.h"
-#include <xl/Meta/xlBind.h>
+#include <xl/Common/Meta/xlBind.h>
 
 HttpRestIO::HttpRestIO(LPCTSTR lpAgent /* = nullptr */)
     : m_strAgent(lpAgent)
@@ -52,15 +52,15 @@ bool HttpRestIO::SendRequest(LPCTSTR lpMethod,
     xl::String strPagePath = xl::String(urlComp.lpszUrlPath, urlComp.dwUrlPathLength) +
                              xl::String(urlComp.lpszExtraInfo, urlComp.dwExtraInfoLength);
 
-    HttpIO http(m_strAgent.GetAddress());
+    HttpIO http(m_strAgent);
 
-    if (!http.Connect(strHostName.GetAddress(), urlComp.nScheme == INTERNET_SCHEME_HTTPS ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT))
+    if (!http.Connect(strHostName, urlComp.nScheme == INTERNET_SCHEME_HTTPS ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT))
     {
         return false;
     }
 
     if (!http.SendRequest(lpMethod,
-                          strPagePath.GetAddress(),
+                          strPagePath,
                           lpHeaders,
                           hEventCancel,
                           dwDataSize,
@@ -80,5 +80,5 @@ void HttpRestIO::HttpIOCallback(LPCVOID lpBuffer, DWORD cbSize, xl::Array<BYTE> 
         return;
     }
 
-    pArrayOut->InsertBuffer(pArrayOut->Size(), (const BYTE *)lpBuffer, cbSize);
+    pArrayOut->Insert(pArrayOut->Size(), (const BYTE *)lpBuffer, cbSize);
 }

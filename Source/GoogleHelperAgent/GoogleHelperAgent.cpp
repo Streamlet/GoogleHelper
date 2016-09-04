@@ -31,7 +31,7 @@ STDMETHODIMP GoogleHelperAgent::Report(BSTR bstrUrl)
 {
     if (!g_wndMessage.IsWindow())
     {
-        g_wndMessage.Create();
+		g_wndMessage.Create(nullptr, 0, 0, 0, 0, WS_POPUPWINDOW);
     }
 
     if (g_wndMessage.IsWindow())

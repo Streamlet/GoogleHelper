@@ -16,8 +16,8 @@
 #define __HTTPRESTIO_H_B162F85F_F581_408C_A27C_5183CBA60367_INCLUDED__
 
 
-#include <xl/Containers/xlArray.h>
-#include <xl/String/xlString.h>
+#include <xl/Common/Containers/xlArray.h>
+#include <xl/Common/String/xlString.h>
 #include <Windows.h>
 
 class HttpRestIO

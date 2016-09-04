@@ -17,9 +17,10 @@
 #define __URLUTILS_H_50B9A6CC_3C27_4FA0_8B2D_F6586D1BD623_INCLUDED__
 
 
-#include <xl/Meta/xlUtility.h>
-#include <xl/Containers/xlMap.h>
-#include <xl/String/xlString.h>
+#include <xl/Common/Meta/xlNonInstantiable.h>
+#include <xl/Common/Meta/xlNonCopyable.h>
+#include <xl/Common/Containers/xlMap.h>
+#include <xl/Common/String/xlString.h>
 #include <Windows.h>
 
 class UrlUtils : public xl::NonInstantiable

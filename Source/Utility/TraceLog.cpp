@@ -14,7 +14,7 @@
 //------------------------------------------------------------------------------
 
 
-#include <xl/String/xlString.h>
+#include <xl/Common/String/xlString.h>
 #include <Windows.h>
 #include <tchar.h>
 #include <iostream>
@@ -157,7 +157,7 @@ void LogPolicy::PrintMessage(::xl::LOG_LEVEL logLevel, const xl::String &file, c
 
     const int MAX_LEVEL_LENGTH = 10;
     wchar_t level[MAX_LEVEL_LENGTH];
-    swprintf(level, MAX_LEVEL_LENGTH, L"%-7s ", (GetLogLevelString(logLevel) + L":").GetAddress());
+    swprintf(level, MAX_LEVEL_LENGTH, L"%-7s ", (LPCTSTR)(GetLogLevelString(logLevel) + L":"));
 
     xl::String msg;
 
@@ -279,23 +279,23 @@ void LogPolicy::PrintToConsole(const xl::String &message)
 {
     HANDLE hConsole = GetStdHandle(STD_ERROR_HANDLE);
     DWORD dwWritten = 0;
-    WriteConsole(hConsole, message.GetAddress(), message.Length(), &dwWritten, NULL);
+    WriteConsole(hConsole, message, message.Length(), &dwWritten, NULL);
 }
 
 void LogPolicy::PrintToDebugger(const xl::String &message)
 {
-    OutputDebugString(message.GetAddress());
+    OutputDebugString(message);
 }
 
 void LogPolicy::PrintToFile(const xl::String &message)
 {
     EnterCriticalSection(&cs_);
 
-    HANDLE hFile = CreateFile(logFile_.GetAddress(), GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+    HANDLE hFile = CreateFile(logFile_, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        hFile = CreateFile(logFile_.GetAddress(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, 0, NULL);
+        hFile = CreateFile(logFile_, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, 0, NULL);
 
         if (hFile == INVALID_HANDLE_VALUE)
         {
@@ -312,7 +312,7 @@ void LogPolicy::PrintToFile(const xl::String &message)
     SetFilePointer(hFile, li.LowPart, &li.HighPart, FILE_END);
 
     DWORD dwWritten = 0;
-    WriteFile(hFile, message.GetAddress(), message.Length() * sizeof(wchar_t), &dwWritten, NULL);
+    WriteFile(hFile, message, message.Length() * sizeof(wchar_t), &dwWritten, NULL);
 
     CloseHandle(hFile);
 

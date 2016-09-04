@@ -18,7 +18,7 @@
 #define __XLLOG_H_504F06E0_64F2_484D_8626_C201BBD6F1EB_INCLUDED__
 
 
-#include <xl/String/xlString.h>
+#include <xl/Common/String/xlString.h>
 
 namespace xl
 {
@@ -110,7 +110,7 @@ private:
 
 #include <stdarg.h>
 #include <stdio.h>
-#include <xl/String/xlString.h>
+#include <xl/Common/String/xlString.h>
 
 namespace xl
 {
@@ -127,18 +127,18 @@ public:
 public:
     void EnterFunction(LOG_LEVEL logLevel, const xl::String &file, const xl::String &funName, const xl::String &line)
     {
-        fwprintf(stderr, L"%-7s: >>>>>>>>>> Enter %s (L%s)\n", GetLogLevelString(logLevel).GetAddress(), funName.GetAddress(), line.GetAddress());
+        fwprintf(stderr, L"%-7s: >>>>>>>>>> Enter %s (L%s)\n", (LPCTSTR)GetLogLevelString(logLevel), (LPCTSTR)funName, (LPCTSTR)line);
     }
 
     void LeaveFunction(LOG_LEVEL logLevel, const xl::String &file, const xl::String &funName, const xl::String &line)
     {
-        fwprintf(stderr, L"%-7s: <<<<<<<<<< Leave %s (L%s)\n", GetLogLevelString(logLevel).GetAddress(), funName.GetAddress(), line.GetAddress());
+        fwprintf(stderr, L"%-7s: <<<<<<<<<< Leave %s (L%s)\n", (LPCTSTR)GetLogLevelString(logLevel), (LPCTSTR)funName, (LPCTSTR)line);
     }
 
     void Print(LOG_LEVEL logLevel, const xl::String &file, const xl::String &funName, const xl::String &line, const xl::String &format, ...)
     {
         wchar_t prefix[10], postfix[10];
-        swprintf(prefix, 10, L"%-7s: ", GetLogLevelString(logLevel).GetAddress());
+        swprintf(prefix, 10, L"%-7s: ", (LPCTSTR)GetLogLevelString(logLevel));
         swprintf(postfix, 10, L" (L%s)\n", line);
         xl::String newFormat = prefix;
         newFormat += format;
@@ -146,7 +146,7 @@ public:
 
         va_list args;
         va_start(args, format);
-        vfwprintf(stderr, newFormat.GetAddress(), args);
+        vfwprintf(stderr, (LPCTSTR)newFormat, args);
         va_end(args);
     }
 

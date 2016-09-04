@@ -17,15 +17,15 @@
 #define __ABOUTDIALOG_H_5C48ACE4_A916_4C27_BD2E_F36FF78E656C_INCLUDED__
 
 
-#include <xl/Win32/GUI/xlDialog.h>
-#include <xl/Win32/GUI/xlStdStatic.h>
-#include <xl/Win32/GUI/xlStdButton.h>
-#include <xl/Win32/GUI/xlStdLink.h>
+#include <xl/Windows/GUI/xlDialog.h>
+#include <xl/Windows/GUI/xlStdStatic.h>
+#include <xl/Windows/GUI/xlStdButton.h>
+#include <xl/Windows/GUI/xlStdLink.h>
 
-class AboutDialog : public xl::Dialog
+class AboutDialog : public xl::Windows::Dialog
 {
 public:
-    static void ShowDialog(xl::Window *pParent = nullptr);
+    static void ShowDialog(xl::Windows::Window *pParent = nullptr);
     static AboutDialog *ms_pDialog;
 
 private:
@@ -40,14 +40,14 @@ private:
     virtual bool OnCreate();
 
 private:
-    xl::StdStatic m_staticIcon;
-    xl::StdStatic m_staticProductName;
-    xl::StdStatic m_staticCopyright;
-    xl::StdStatic m_staticThanks;
-    xl::StdStatic m_staticContact;
-    xl::StdLink   m_linkWebsite;
-    xl::StdLink   m_linkEmail;
-    xl::StdButton m_buttonOK;
+    xl::Windows::StdStatic m_staticIcon;
+    xl::Windows::StdStatic m_staticProductName;
+    xl::Windows::StdStatic m_staticCopyright;
+    xl::Windows::StdStatic m_staticThanks;
+    xl::Windows::StdStatic m_staticContact;
+    xl::Windows::StdLink   m_linkWebsite;
+    xl::Windows::StdLink   m_linkEmail;
+    xl::Windows::StdButton m_buttonOK;
 
 private:
     bool m_bIconMoving;
@@ -65,9 +65,9 @@ private:
 
 private:
     // Notify Message Handlers
-    // LRESULT OnNotifyMessage(HWND hWnd, UINT_PTR uID, UINT uCode, HWND hControl, BOOL &bHandled);
-    LRESULT OnLinkWebsiteClick(HWND hWnd, UINT_PTR uID, UINT uCode, HWND hControl, BOOL &bHandled);
-    LRESULT OnLinkEmailClick  (HWND hWnd, UINT_PTR uID, UINT uCode, HWND hControl, BOOL &bHandled);
+    // LRESULT OnNotifyMessage(HWND hWnd, LPNMHDR lpNMHDR, BOOL &bHandled);
+    LRESULT OnLinkWebsiteClick(HWND hWnd, LPNMHDR lpNMHDR, BOOL &bHandled);
+    LRESULT OnLinkEmailClick  (HWND hWnd, LPNMHDR lpNMHDR, BOOL &bHandled);
 
 
 };

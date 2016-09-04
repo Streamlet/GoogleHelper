@@ -120,14 +120,14 @@ STDMETHODIMP GoogleHelper::Invoke(DISPID dispIdMember,
         break;
     }
 
-    return xl::Dispatcher<xl::IObjectWithSiteImpl<>>::Invoke(dispIdMember,
-                                                             riid,
-                                                             lcid,
-                                                             wFlags,
-                                                             pDispParams,
-                                                             pVarResult,
-                                                             pExcepInfo,
-                                                             puArgErr);
+    return xl::Windows::Dispatcher<xl::Windows::IObjectWithSiteImpl<>>::Invoke(dispIdMember,
+                                                                               riid,
+                                                                               lcid,
+                                                                               wFlags,
+                                                                               pDispParams,
+                                                                               pVarResult,
+                                                                               pExcepInfo,
+                                                                               puArgErr);
 }
 
 void GoogleHelper::ReleaseSiteResources()
@@ -242,7 +242,7 @@ HRESULT GoogleHelper::OnBeforeNavigate2(DISPPARAMS *pDispParams, VARIANT *pVarRe
 
     VARIANT vtUrl = {};
     vtUrl.vt = VT_BSTR;
-    vtUrl.bstrVal = SysAllocString(strJumpingUrlDecoded.GetAddress());
+    vtUrl.bstrVal = SysAllocString(strJumpingUrlDecoded);
 
     if (m_pAgent != nullptr)
     {

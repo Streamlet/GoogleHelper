@@ -17,7 +17,7 @@
 
 xl::StringW Encoding::AnsiToUnicode(const xl::StringA &strAnsi, DWORD dwCodePage /*= CP_ACP*/)
 {
-    int size = MultiByteToWideChar(dwCodePage, 0, strAnsi.GetAddress(), -1, NULL, 0);
+    int size = MultiByteToWideChar(dwCodePage, 0, strAnsi, -1, NULL, 0);
 
     if (size == 0)
     {
@@ -26,7 +26,7 @@ xl::StringW Encoding::AnsiToUnicode(const xl::StringA &strAnsi, DWORD dwCodePage
 
     LPWSTR szUnicode = new WCHAR[size];
 
-    if (MultiByteToWideChar(dwCodePage, 0, strAnsi.GetAddress(), -1, szUnicode, size) == 0)
+    if (MultiByteToWideChar(dwCodePage, 0, strAnsi, -1, szUnicode, size) == 0)
     {
         delete szUnicode;
         return L"";
@@ -40,7 +40,7 @@ xl::StringW Encoding::AnsiToUnicode(const xl::StringA &strAnsi, DWORD dwCodePage
 
 xl::StringA Encoding::UnicodeToAnsi(const xl::StringW &strUnicode, DWORD dwCodePage /*= CP_ACP*/)
 {
-    int size = WideCharToMultiByte(dwCodePage, 0, strUnicode.GetAddress(), -1, NULL, 0, NULL, NULL);
+    int size = WideCharToMultiByte(dwCodePage, 0, strUnicode, -1, NULL, 0, NULL, NULL);
 
     if (size == 0)
     {
@@ -49,7 +49,7 @@ xl::StringA Encoding::UnicodeToAnsi(const xl::StringW &strUnicode, DWORD dwCodeP
 
     LPSTR szAnsi = new CHAR[size];
 
-    if (WideCharToMultiByte(dwCodePage, 0, strUnicode.GetAddress(), -1, szAnsi, size, NULL, NULL) == 0)
+    if (WideCharToMultiByte(dwCodePage, 0, strUnicode, -1, szAnsi, size, NULL, NULL) == 0)
     {
         delete szAnsi;
         return "";

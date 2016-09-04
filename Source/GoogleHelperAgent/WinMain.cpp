@@ -16,7 +16,7 @@
 
 #include <Windows.h>
 #include <tchar.h>
-#include <xl/Win32/COM/xlComInclude.h>
+#include <xl/Windows/COM/xlComInclude.h>
 #include "MessageWindow.h"
 
 int APIENTRY _tWinMain(_In_ HINSTANCE     hInstance,
@@ -24,19 +24,19 @@ int APIENTRY _tWinMain(_In_ HINSTANCE     hInstance,
                        _In_ LPTSTR        lpCmdLine,
                        _In_ int           nCmdShow)
 {
-    xl::g_pComModule = new xl::ComModule(hInstance, _T("Streamlet GoogleHelperAgent TypeLib 1.0"));
+    xl::Windows::g_pComModule = new xl::Windows::ComModule(hInstance, _T("Streamlet GoogleHelperAgent TypeLib 1.0"));
     
     if (_tcsicmp(lpCmdLine, _T("/RegServer")) == 0 || _tcsicmp(lpCmdLine, _T("-RegServer")) == 0)
     {
-        xl::g_pComModule->ExeRegisterServer();
+        xl::Windows::g_pComModule->ExeRegisterServer();
     }
     else if (_tcsicmp(lpCmdLine, _T("/UnregServer")) == 0 || _tcsicmp(lpCmdLine, _T("-UnregServer")) == 0)
     {
-        xl::g_pComModule->ExeUnregisterServer();
+        xl::Windows::g_pComModule->ExeUnregisterServer();
     }
     else if (_tcsicmp(lpCmdLine, _T("/Embedding")) == 0 || _tcsicmp(lpCmdLine, _T("-Embedding")) == 0)
     {
-        HRESULT hr = xl::g_pComModule->ExeRegisterClassObject();
+        HRESULT hr = xl::Windows::g_pComModule->ExeRegisterClassObject();
 
         if (SUCCEEDED(hr))
         {
@@ -54,10 +54,10 @@ int APIENTRY _tWinMain(_In_ HINSTANCE     hInstance,
             }
         }
 
-        xl::g_pComModule->ExeUnregisterClassObject();
+        xl::Windows::g_pComModule->ExeUnregisterClassObject();
     }
 
-    delete xl::g_pComModule;
+    delete xl::Windows::g_pComModule;
 
     return 0;
 }

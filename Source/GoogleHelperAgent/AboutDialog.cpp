@@ -14,12 +14,13 @@
 //------------------------------------------------------------------------------
 
 
-#include <xl/String/xlString.h>
+#include <xl/Common/String/xlString.h>
 #include <Windows.h>
 #include <ShellAPI.h>
 #include "AboutDialog.h"
 #include "resource.h"
 #include "../GlobalDef.h"
+#include <tchar.h>
 
 enum
 {
@@ -38,13 +39,13 @@ enum
     ID_LINK_EMAIL
 };
 
-void AboutDialog::ShowDialog(xl::Window *pParent /*= nullptr*/)
+void AboutDialog::ShowDialog(xl::Windows::Window *pParent /*= nullptr*/)
 {
     if (ms_pDialog == nullptr)
     {
         AboutDialog dialog;
 
-        if (dialog.Create(320, 304, pParent, xl::Dialog::GetClassName(), WS_POPUPWINDOW | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, WS_EX_CONTROLPARENT | WS_EX_LAYERED))
+        if (dialog.Create(*pParent, 320, 304, WS_POPUPWINDOW | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, WS_EX_CONTROLPARENT | WS_EX_LAYERED))
         {
             ms_pDialog = &dialog;
             dialog.DoModal();
@@ -78,15 +79,15 @@ void AboutDialog::CreateControls()
 {
     SetLayeredWindowAttributes(m_hWnd, 0, 255, LWA_ALPHA);
 
-    m_buttonOK          .Create(IDOK,                   this, 224, 240, 75,  24);
+    m_buttonOK          .Create(m_hWnd, IDOK,                   224, 240, 75,  24);
 
-    m_staticIcon        .Create(ID_STATIC_ICON,         this, 12,  10,  32,  32, WS_CHILD | WS_VISIBLE | SS_NOTIFY | SS_ICON);
-    m_staticProductName .Create(ID_STATIC_PRODUCTNAME,  this, 60,  10,  240, 16);
-    m_staticCopyright   .Create(ID_STATIC_COPYRIGHT,    this, 60,  30,  240, 32);
-    m_staticThanks      .Create(ID_STATIC_THANKS,       this, 60,  80,  240, 48);
-    m_staticContact     .Create(ID_STATIC_CONTACT,      this, 60,  148, 240, 32);
-    m_linkWebsite       .Create(ID_LINK_WEBSITE,        this, 60,  192, 240, 16);
-    m_linkEmail         .Create(ID_LINK_EMAIL,          this, 60,  212, 240, 16);
+    m_staticIcon        .Create(m_hWnd, ID_STATIC_ICON,         12,  10,  32,  32, WS_CHILD | WS_VISIBLE | SS_NOTIFY | SS_ICON);
+    m_staticProductName .Create(m_hWnd, ID_STATIC_PRODUCTNAME,  60,  10,  240, 16);
+    m_staticCopyright   .Create(m_hWnd, ID_STATIC_COPYRIGHT,    60,  30,  240, 32);
+    m_staticThanks      .Create(m_hWnd, ID_STATIC_THANKS,       60,  80,  240, 48);
+    m_staticContact     .Create(m_hWnd, ID_STATIC_CONTACT,      60,  148, 240, 32);
+    m_linkWebsite       .Create(m_hWnd, ID_LINK_WEBSITE,        60,  192, 240, 16);
+    m_linkEmail         .Create(m_hWnd, ID_LINK_EMAIL,          60,  212, 240, 16);
 }
 
 void AboutDialog::SetTexts()
@@ -178,13 +179,13 @@ LRESULT AboutDialog::OnStaticIconClick(HWND hWnd, WORD wID, WORD wCode, HWND hCo
     return FALSE;
 }
 
-LRESULT AboutDialog::OnLinkWebsiteClick(HWND hWnd, UINT_PTR uID, UINT uCode, HWND hControl, BOOL &bHandled)
+LRESULT AboutDialog::OnLinkWebsiteClick(HWND hWnd, LPNMHDR lpNMHDR, BOOL &bHandled)
 {
     ShellExecute(m_hWnd, _T("open"), _T("http://www.streamlet.org/"), NULL, NULL, SW_SHOW);
     return FALSE;
 }
 
-LRESULT AboutDialog::OnLinkEmailClick(HWND hWnd, UINT_PTR uID, UINT uCode, HWND hControl, BOOL &bHandled)
+LRESULT AboutDialog::OnLinkEmailClick(HWND hWnd, LPNMHDR lpNMHDR, BOOL &bHandled)
 {
     ShellExecute(m_hWnd, _T("open"), _T("mailto:kejinjin@gmail.com"), NULL, NULL, SW_SHOW);
     return FALSE;

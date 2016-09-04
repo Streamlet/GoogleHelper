@@ -17,11 +17,11 @@
 #define __MESSAGEWINDOW_H_F2D9ACF7_E60E_449D_9DB8_225D5B818A91_INCLUDED__
 
 
-#include <xl/Win32/GUI/xlWindow.h>
-#include <xl/Win32/GUI/xlMenu.h>
-#include <xl/Win32/Threads/xlThread.h>
+#include <xl/Windows/GUI/xlWindow.h>
+#include <xl/Windows/GUI/xlMenu.h>
+#include <xl/Windows/Threads/xlThread.h>
 
-class MessageWindow : public xl::Window
+class MessageWindow : public xl::Windows::Window
 {
 public:
     MessageWindow();
@@ -42,10 +42,10 @@ private:
 
 private:
     NOTIFYICONDATA m_nid;
-    xl::Menu m_menuTray;
+    xl::Windows::Menu m_menuTray;
 
 private:
-    typedef xl::Thread<DWORD> UpdateThreadType;
+    typedef xl::Windows::Thread<DWORD> UpdateThreadType;
     UpdateThreadType m_tUpdateThread;
 
 private:
