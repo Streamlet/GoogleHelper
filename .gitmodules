@@ -1,9 +1,0 @@
-[submodule "Source/External/boost"]
-	path = Source/External/boost
-	url = https://github.com/Streamlet/boost.git
-[submodule "Source/External/xlLib"]
-	path = Source/External/xlLib
-	url = https://github.com/Streamlet/xlLib.git
-[submodule "Source/VSProps"]
-	path = Source/VSProps
-	url = https://github.com/Streamlet/VSProps.git
