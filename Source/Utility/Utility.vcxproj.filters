@@ -21,9 +21,6 @@
     <ClCompile Include="UrlUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TraceLog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HttpIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,16 +35,13 @@
     <ClInclude Include="UrlUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TraceLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="xlLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HttpIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HttpRestIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,9 +20,9 @@
 #include "resource.h"
 #include <xl/Common/String/xlString.h>
 #include <xl/Common/String/xlEncoding.h>
-#include "../Utility/TraceLog.h"
+#include "../Utility/Log.h"
 #include "../Utility/HttpRestIO.h"
-#include <boost/property_tree/json_parser.hpp>
+//#include <boost/property_tree/json_parser.hpp>
 #include <tchar.h>
 #pragma comment(lib, "Version.lib")
 
@@ -149,7 +149,7 @@ LRESULT MessageWindow::OnMenuWebsite(HWND hWnd, WORD wID, WORD wCode, HWND hCont
 
 DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
 {
-    XL_INFO_FUNCTION();
+    XL_LOG_INFO_FUNCTION();
 
     if (WaitForSingleObject(hQuit, dwDelay) == WAIT_OBJECT_0)
     {
@@ -195,7 +195,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
     TCHAR szLocalVersion[MAX_PATH] = {};
     _stprintf_s(szLocalVersion, _T("%u.%u.%u.%u"), dwMajor, dwMinor, dwBuild, dwRevision);
 
-    XL_INFO(_T("Local version: %s"), szLocalVersion);
+    XL_LOG_INFO(_T("Local version: %s"), szLocalVersion);
 
     xl::String strUrl = _T("http://www.streamlet.org/api/Update/Query/GoogleHelper/");
     strUrl += szLocalVersion;
@@ -225,7 +225,7 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
         return 0;
     }
 
-    XL_INFO(_T("Update result:\r\n%s"), (LPCTSTR)strJson);
+    XL_LOG_INFO(_T("Update result:\r\n%s"), (LPCTSTR)strJson);
 
     //
     // Json Format
@@ -240,47 +240,47 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
 
     try
     {
-        using namespace boost::property_tree;
+        //using namespace boost::property_tree;
 
-        std::wstringstream ss((LPCTSTR)strJson);
-        wptree pt;
-        json_parser::read_json(ss, pt);
+        //std::wstringstream ss((LPCTSTR)strJson);
+        //wptree pt;
+        //json_parser::read_json(ss, pt);
 
-        bool bResult = pt.get<bool>(_T("Result"));
-        xl::String strVersion = pt.get<std::wstring>(_T("Version")).c_str();
-        xl::String strDisplayVersion = pt.get<std::wstring>(_T("DisplayVersion")).c_str();
-        xl::String strUrl = pt.get<std::wstring>(_T("Url")).c_str();
+        //bool bResult = pt.get<bool>(_T("Result"));
+        //xl::String strVersion = pt.get<std::wstring>(_T("Version")).c_str();
+        //xl::String strDisplayVersion = pt.get<std::wstring>(_T("DisplayVersion")).c_str();
+        //xl::String strUrl = pt.get<std::wstring>(_T("Url")).c_str();
 
-        if (!bResult)
-        {
-            XL_INFO(_T("Not update. Prompt: %u"), (DWORD)(dwDelay == 0));
+        //if (!bResult)
+        //{
+        //    XL_INFO(_T("Not update. Prompt: %u"), (DWORD)(dwDelay == 0));
 
-            if (dwDelay == 0)
-            {
-                TCHAR szMessage[MAX_PATH] = {};
-                _stprintf_s(szMessage, MESSAGE_UPDATE_LATEST, szLocalVersion);
-                MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_OK | MB_ICONINFORMATION);
-            }
+        //    if (dwDelay == 0)
+        //    {
+        //        TCHAR szMessage[MAX_PATH] = {};
+        //        _stprintf_s(szMessage, MESSAGE_UPDATE_LATEST, szLocalVersion);
+        //        MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_OK | MB_ICONINFORMATION);
+        //    }
 
-            return 0;
-        }
+        //    return 0;
+        //}
 
-        TCHAR szMessage[MAX_PATH] = {};
-        xl::String strVersionString = strDisplayVersion + _T(" (") + strVersion + _T(") ");
-        _stprintf_s(szMessage, MESSAGE_UPDATE_NEW_VERSION, (LPCTSTR)strVersionString);
+        //TCHAR szMessage[MAX_PATH] = {};
+        //xl::String strVersionString = strDisplayVersion + _T(" (") + strVersion + _T(") ");
+        //_stprintf_s(szMessage, MESSAGE_UPDATE_NEW_VERSION, (LPCTSTR)strVersionString);
 
-        if (MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_YESNO | MB_ICONINFORMATION) != IDYES)
-        {
-            XL_INFO(_T("User refused to update."));
-            return 0;
-        }
+        //if (MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_YESNO | MB_ICONINFORMATION) != IDYES)
+        //{
+        //    XL_INFO(_T("User refused to update."));
+        //    return 0;
+        //}
 
-        ShellExecute(m_hWnd, _T("open"), strUrl, NULL, NULL, SW_SHOW);
-        XL_INFO(_T("User accept to update."));
+        //ShellExecute(m_hWnd, _T("open"), strUrl, NULL, NULL, SW_SHOW);
+        //XL_INFO(_T("User accept to update."));
     }
     catch (...)
     {
-        XL_INFO(_T("Failed to parse Json result."));
+        XL_LOG_INFO(_T("Failed to parse Json result."));
     }
 
     return 0;

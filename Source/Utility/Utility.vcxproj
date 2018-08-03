@@ -22,16 +22,14 @@
     <ClCompile Include="Encoding.cpp" />
     <ClCompile Include="HttpIO.cpp" />
     <ClCompile Include="HttpRestIO.cpp" />
-    <ClCompile Include="TraceLog.cpp" />
     <ClCompile Include="UrlUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Encoding.h" />
     <ClInclude Include="HttpIO.h" />
     <ClInclude Include="HttpRestIO.h" />
-    <ClInclude Include="TraceLog.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="UrlUtils.h" />
-    <ClInclude Include="xlLog.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D2930A6F-4A67-4DEF-B092-E75AA2D00141}</ProjectGuid>
