@@ -22,7 +22,7 @@
 #include <xl/Common/String/xlEncoding.h>
 #include "../Utility/Log.h"
 #include "../Utility/HttpRestIO.h"
-//#include <boost/property_tree/json_parser.hpp>
+#include <json/json.h>
 #include <tchar.h>
 #pragma comment(lib, "Version.lib")
 
@@ -238,50 +238,62 @@ DWORD MessageWindow::UpdateThread(HANDLE hQuit, DWORD dwDelay)
     // }
     //
 
-    try
-    {
-        //using namespace boost::property_tree;
+    Json::Value root;
 
-        //std::wstringstream ss((LPCTSTR)strJson);
-        //wptree pt;
-        //json_parser::read_json(ss, pt);
-
-        //bool bResult = pt.get<bool>(_T("Result"));
-        //xl::String strVersion = pt.get<std::wstring>(_T("Version")).c_str();
-        //xl::String strDisplayVersion = pt.get<std::wstring>(_T("DisplayVersion")).c_str();
-        //xl::String strUrl = pt.get<std::wstring>(_T("Url")).c_str();
-
-        //if (!bResult)
-        //{
-        //    XL_INFO(_T("Not update. Prompt: %u"), (DWORD)(dwDelay == 0));
-
-        //    if (dwDelay == 0)
-        //    {
-        //        TCHAR szMessage[MAX_PATH] = {};
-        //        _stprintf_s(szMessage, MESSAGE_UPDATE_LATEST, szLocalVersion);
-        //        MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_OK | MB_ICONINFORMATION);
-        //    }
-
-        //    return 0;
-        //}
-
-        //TCHAR szMessage[MAX_PATH] = {};
-        //xl::String strVersionString = strDisplayVersion + _T(" (") + strVersion + _T(") ");
-        //_stprintf_s(szMessage, MESSAGE_UPDATE_NEW_VERSION, (LPCTSTR)strVersionString);
-
-        //if (MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_YESNO | MB_ICONINFORMATION) != IDYES)
-        //{
-        //    XL_INFO(_T("User refused to update."));
-        //    return 0;
-        //}
-
-        //ShellExecute(m_hWnd, _T("open"), strUrl, NULL, NULL, SW_SHOW);
-        //XL_INFO(_T("User accept to update."));
-    }
-    catch (...)
+    if (!Json::Reader().parse((LPCSTR)strJsonA, (LPCSTR)strJsonA + strJsonA.Length(), root))
     {
         XL_LOG_INFO(_T("Failed to parse Json result."));
+        return 0;
     }
+
+    bool bResult = root["Result"].asBool();
+    xl::StringA strVersionA = root["Version"].asCString();
+    xl::StringA strDisplayVersionA = root["DisplayVersion"].asCString();
+    xl::StringA strDownloadUrlA = root["Url"].asCString();
+
+    xl::String strVersion;
+    xl::String strDisplayVersion;
+    xl::String strDownloadUrl;
+
+    if (!xl::Encoding::Utf8ToUtf16(strVersionA, &strVersion))
+    {
+        return 0;
+    }
+    if (!xl::Encoding::Utf8ToUtf16(strDisplayVersionA, &strDisplayVersion))
+    {
+        return 0;
+    }
+    if (!xl::Encoding::Utf8ToUtf16(strDownloadUrlA, &strDownloadUrl))
+    {
+        return 0;
+    }
+
+    if (!bResult)
+    {
+        XL_LOG_INFO(_T("Not update. Prompt: %u"), (DWORD)(dwDelay == 0));
+
+        if (dwDelay == 0)
+        {
+            TCHAR szMessage[MAX_PATH] = {};
+            _stprintf_s(szMessage, MESSAGE_UPDATE_LATEST, szLocalVersion);
+            MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_OK | MB_ICONINFORMATION);
+        }
+
+        return 0;
+    }
+
+    TCHAR szMessage[MAX_PATH] = {};
+    xl::String strVersionString = strDisplayVersion + _T(" (") + strVersion + _T(") ");
+    _stprintf_s(szMessage, MESSAGE_UPDATE_NEW_VERSION, (LPCTSTR)strVersionString);
+
+    if (MessageBox(szMessage, MESSAGE_UPDATE_CAPTION, MB_YESNO | MB_ICONINFORMATION) != IDYES)
+    {
+        XL_LOG_INFO(_T("User refused to update."));
+        return 0;
+    }
+
+    ShellExecute(m_hWnd, _T("open"), strDownloadUrl, NULL, NULL, SW_SHOW);
+    XL_LOG_INFO(_T("User accept to update."));
 
     return 0;
 }

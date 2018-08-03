@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\External\jsoncpp\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\External\jsoncpp\src\lib_json\json_value.cpp" />
+    <ClCompile Include="..\External\jsoncpp\src\lib_json\json_writer.cpp" />
     <ClCompile Include="Encoding.cpp" />
     <ClCompile Include="HttpIO.cpp" />
     <ClCompile Include="HttpRestIO.cpp" />
